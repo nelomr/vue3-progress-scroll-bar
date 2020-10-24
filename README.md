@@ -1,4 +1,5 @@
 # progress-scroll-bar
+Simple progress scroll bar in vue 3
 
 ## Project setup
 ```
