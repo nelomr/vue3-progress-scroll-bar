@@ -1,14 +1,15 @@
 <template>
     <div class="progress-bar--container" :style="`${positionValue};`">
         <div
-            :style="`background-color: ${colorValue}; width: ${width}%;`"
+            v-scroll
+            :style="`background-color: ${colorValue};`"
             class="progress-bar"
             >
         </div>
     </div>
 </template>
 <script>
-import {computed, ref, onMounted} from 'vue';
+import {computed} from 'vue';
 
 export default {
     props: {
@@ -22,7 +23,6 @@ export default {
         }
     },
     setup(props) {
-        const width = ref(0);
         const colorValue = computed(() => (props.color));
         const positionValue = computed(() => {
             let position = props.position;
@@ -31,19 +31,19 @@ export default {
             }
             return 'top: 0';
         });
-    
-        function progress() {
-            let documentHeight = (document.documentElement.scrollHeight - document.documentElement.clientHeight);
-            width.value = (window.scrollY*100) / documentHeight;
+
+        return {colorValue, positionValue};
+    },
+    directives: {
+        scroll: {
+            mounted(el) {
+                document.addEventListener('scroll', () => {
+                    const documentHeight = (document.documentElement.scrollHeight - document.documentElement.clientHeight);
+                    const width = (window.scrollY*100) / documentHeight;
+                    el.style['width'] = `${width}%`;
+                });
+            }
         }
-
-        onMounted(() => {
-            document.addEventListener('scroll', function(){ 
-                progress();
-            });
-        })
-
-        return {colorValue, positionValue, progress, width};
     }
 }
 </script>
