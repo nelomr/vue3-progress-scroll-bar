@@ -1,15 +1,15 @@
 <template>
   <header>
     <img src="@/assets/logo.png" alt="">
-    <h2 v-text="dummyText.title"></h2>
+    <h2 v-text="title"></h2>
     <ProgressBar :height="10" />
   </header>
-  <div class="content" v-html="dummyText.content"></div>
+  <div class="content" v-html="content"></div>
 </template>
 
 <script>
 import ProgressBar from "./components/ProgressBar.vue";
-import dummyText from "./data/dummyText.json";
+import {content, title } from "./data/dummyText.json";
 
 export default {
   name: "App",
@@ -18,7 +18,8 @@ export default {
   },
   data() {
     return {
-      dummyText
+      content,
+      title
     };
   },
 };
@@ -55,8 +56,13 @@ img {
   max-width: 70px;
 }
 
-.content p {
-  margin: 0 10px 1em;
+.content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+p {
+  margin-bottom: 1em;
   text-align: left;
 }
 </style>
